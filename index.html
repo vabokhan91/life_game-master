@@ -1,0 +1,37 @@
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Game of life</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script type="text/javascript" src="js/gamescript.js"></script>
+    <script type="text/javascript" src="js/entities.js"></script>
+
+
+</head>
+<body>
+<div id="grid_inputs" class="inline">
+<canvas id="game_grid" style="visibility: hidden"></canvas>
+<div style="display:none;">
+    <img id="predator" src="img/predator.jpg">
+    <img id="victim" src="img/victim.jpg">
+</div>
+
+<div id="preconditions_form" >
+    Grid size :<br>
+    <input type="text" id="grid_size" name="size_of_grid" value="">
+    <br>
+    Size of field :<br>
+    <input type="text" id="field_size" name="size_of_field" value="">
+    <br>
+    Number of iterations :<br>
+    <input type="text" id="times" name="num_of_iterations" value="">
+    <br>
+    Density :<br>
+    <input type="text" id="density" name="density" value="">
+    <br>
+    <br><br>
+    <input type="submit" onclick="game()" value="start game">
+</div>
+</div>
+</body>
+</html>
