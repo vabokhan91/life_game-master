@@ -1,10 +1,11 @@
 
 class Predator {
-    constructor(image, x, y, lifetime) {
-        this.lifetime = lifetime;
+    constructor(image, x, y, ctx) {
+        this.lifetime = ctx.lifetime;
         this.image = image;
         this.x = x;
         this.y = y;
+        this.reproduction = ctx.reproduction;
     }
 
     draw(ctx) {
@@ -43,12 +44,16 @@ class Predator {
         }
     }
 
-    reproduce(entities) {
+    reproduce(entities, ctx) {
         if (this.lifetime <= 0) {
             var index = entities.indexOf(this);
             entities.splice(index, 1);
         } else {
             this.lifetime -= 1;
+            this.reproduction -= 1;
+            if(this.reproduction === 0 ){
+                addEntity(entities, 1, ctx);
+            }
         }
 
     }
@@ -56,8 +61,8 @@ class Predator {
 }
 
 class Victim {
-    constructor(image, x, y, lifetime) {
-        this.lifetime = lifetime;
+    constructor(image, x, y, ctx) {
+        this.reproduction = ctx.reproduction;
         this.image = image;
         this.x = x;
         this.y = y;
@@ -96,6 +101,10 @@ class Victim {
             entities.splice(index, 1);
         } else {
             this.lifetime -= 1;
+            this.reproduction -= 1;
+            if(this.reproduction === 0 ){
+                addEntity(entities, 0, ctx);
+            }
         }
 
     }

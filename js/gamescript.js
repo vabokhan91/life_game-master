@@ -4,6 +4,8 @@ function game() {
     var ctx = c.getContext('2d');
     var gridSize = parseInt(document.getElementById('grid_size').value);
     var cellSize = parseInt(document.getElementById('field_size').value);
+    var lifetime = parseInt(document.getElementById('lifetime').value);
+    var reproduction = parseInt(document.getElementById('reproduction').value);
     var width = gridSize * cellSize;
     var height = gridSize * cellSize;
     var density = document.getElementById('density').value;
@@ -13,6 +15,8 @@ function game() {
     ctx.width = width;
     ctx.height = height;
     ctx.cellSize = cellSize;
+    ctx.lifetime = lifetime;
+    ctx.reproduction = reproduction;
     var entities = [];
     drawGrid(ctx);
     initEntities(density, entities, ctx);
@@ -98,12 +102,13 @@ function initEntities(density, entities, ctx) {
     var numberOfEntities = 100 - density * 100;
 
     for (var i = 0; i < numberOfEntities; i++) {
-        addEntity(entities, ctx);
+        var type = Math.random();
+        addEntity(entities, type, ctx);
     }
 
 }
 
-function addEntity(entities, ctx) {
+function addEntity(entities, type, ctx) {
     var isCellClosed = true;
     var coordinates = choosePosition(ctx);
     var entitiesLength = entities.length;
@@ -118,23 +123,23 @@ function addEntity(entities, ctx) {
             isCellClosed = false;
         }
     }
-    if (Math.random() >= 0.5) {
-        var pred = addPredator(coordinates.x, coordinates.y);
+    if (type >= 0.5) {
+        var pred = addPredator(coordinates.x, coordinates.y, ctx);
         entities[entitiesLength] = pred;
     } else {
-        var victim = addVictim(coordinates.x, coordinates.y);
+        var victim = addVictim(coordinates.x, coordinates.y, ctx);
         entities[entitiesLength] = victim;
     }
 
 }
 
-function addVictim(x, y) {
-    var victim = new Victim(document.getElementById('victim'), x, y, 50);
+function addVictim(x, y ,ctx) {
+    var victim = new Victim(document.getElementById('victim'), x, y,ctx);
     return victim;
 }
 
-function addPredator(x, y) {
-    var predator = new Predator(document.getElementById('predator'), x, y, 10);
+function addPredator(x, y, ctx) {
+    var predator = new Predator(document.getElementById('predator'), x, y, ctx);
     return predator;
 }
 
